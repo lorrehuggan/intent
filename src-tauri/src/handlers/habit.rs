@@ -16,11 +16,9 @@ pub struct Habit {
 
 #[tauri::command]
 pub fn get_habit() -> Habit {
-    let habit = Habit {
+    Habit {
         title: "test".to_string(),
         description: "test".to_string(),
         status: HabitStatus::Archived,
-    };
-
-    habit
+    }
 }
