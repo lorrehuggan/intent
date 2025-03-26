@@ -1,6 +1,5 @@
-
 @layer components {
   button {
-    @apply cursor-pointer
+    @apply cursor-pointer;
   }
 }
