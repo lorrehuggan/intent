@@ -4,5 +4,5 @@
 
 <main class="container">
   <p class="text-2">hello</p>
-  <Button variant="destructive">Joke</Button>
+  <Button>Joke</Button>
 </main>
