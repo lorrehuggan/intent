@@ -1,9 +1,9 @@
 mod handlers;
-
-use std::fs::OpenOptions;
+mod models;
 
 use handlers::habit;
 use sqlx::{sqlite::SqlitePoolOptions, Pool, Sqlite};
+use std::fs::OpenOptions;
 use tauri::{App, Manager};
 
 struct AppState {
