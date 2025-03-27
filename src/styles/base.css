@@ -35,6 +35,9 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply rounded-2xl;
+  }
   body {
     @apply bg-background text-foreground;
   }
