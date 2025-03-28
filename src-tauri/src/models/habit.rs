@@ -1,24 +1,28 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+use ts_rs::TS;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/types/bindings.ts")]
 pub enum HabitStatus {
     Completed,
     OnGoing,
     Archived,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/types/bindings.ts")]
 pub enum Streak {
     Daily,
     Weekly,
     Monthly,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/types/bindings.ts")]
 pub enum Theme {
     Red,
     Green,
@@ -31,8 +35,9 @@ pub enum Theme {
     Neutral,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/types/bindings.ts")]
 pub enum Category {
     Health,
     Fitness,
@@ -54,8 +59,9 @@ pub enum Category {
     Other,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/types/bindings.ts")]
 pub enum Reminder {
     Mon,
     Tue,
@@ -66,8 +72,9 @@ pub enum Reminder {
     Sun,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/types/bindings.ts")]
 pub struct Habit {
     pub title: String,
     pub description: String,
