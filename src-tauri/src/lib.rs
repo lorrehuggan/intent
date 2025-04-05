@@ -1,7 +1,8 @@
 mod handlers;
 mod models;
 
-use handlers::habit;
+use handlers::app::{habit, timeline};
+use handlers::user::settings;
 use sqlx::{sqlite::SqlitePoolOptions, Pool, Sqlite};
 use std::fs::OpenOptions;
 use tauri::{App, Manager};
@@ -22,7 +23,12 @@ pub fn run() {
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![habit::get_habit])
+        .invoke_handler(tauri::generate_handler![
+            habit::get_habit,
+            timeline::create_year_timeline,
+            settings::get_user_settings,
+            settings::set_user_settings
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

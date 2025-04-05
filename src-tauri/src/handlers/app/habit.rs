@@ -1,4 +1,6 @@
-use crate::models::habit::{Category, Habit, HabitStatus, Reminder, Streak, Theme};
+use crate::models::app::habit::{
+    Habit, HabitCategory, HabitReminder, HabitStatus, HabitStreak, HabitTheme,
+};
 use chrono::Utc;
 
 #[tauri::command]
@@ -7,11 +9,11 @@ pub fn get_habit() -> Habit {
         title: "test".to_string(),
         description: "test".to_string(),
         status: HabitStatus::OnGoing,
-        streak: Streak::Monthly,
+        streak: HabitStreak::Monthly,
         completions: 1,
-        theme: Theme::Mint,
-        category: Category::Health,
-        reminder: Some(Reminder::Mon),
+        theme: HabitTheme::Mint,
+        category: HabitCategory::Health,
+        reminder: Some(HabitReminder::Mon),
         created: Utc::now(),
         updated: None,
     }

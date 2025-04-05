@@ -14,7 +14,7 @@ pub enum HabitStatus {
 #[derive(Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/types/bindings.ts")]
-pub enum Streak {
+pub enum HabitStreak {
     Daily,
     Weekly,
     Monthly,
@@ -23,7 +23,7 @@ pub enum Streak {
 #[derive(Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/types/bindings.ts")]
-pub enum Theme {
+pub enum HabitTheme {
     Red,
     Green,
     Blue,
@@ -38,7 +38,7 @@ pub enum Theme {
 #[derive(Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/types/bindings.ts")]
-pub enum Category {
+pub enum HabitCategory {
     Health,
     Fitness,
     Nutrition,
@@ -62,7 +62,7 @@ pub enum Category {
 #[derive(Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/types/bindings.ts")]
-pub enum Reminder {
+pub enum HabitReminder {
     Mon,
     Tue,
     Wed,
@@ -79,11 +79,11 @@ pub struct Habit {
     pub title: String,
     pub description: String,
     pub status: HabitStatus,
-    pub streak: Streak,
+    pub streak: HabitStreak,
     pub completions: u16,
-    pub theme: Theme,
-    pub category: Category,
-    pub reminder: Option<Reminder>,
+    pub theme: HabitTheme,
+    pub category: HabitCategory,
+    pub reminder: Option<HabitReminder>,
     pub created: DateTime<Utc>,
     pub updated: Option<DateTime<Utc>>,
 }

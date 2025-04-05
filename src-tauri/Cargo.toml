@@ -32,3 +32,4 @@ tokio = { version = "1.44.0", features = [
   "rt-multi-thread",
 ] }
 ts-rs = { version = "10.1.0", features = ["chrono-impl"] }
+anyhow = "1.0.97"
