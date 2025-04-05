@@ -3,17 +3,8 @@
   import { Minus, Square, X } from "@lucide/svelte";
   import { tv } from "tailwind-variants";
   import { Window } from "@tauri-apps/api/window";
+
   const appWindow = new Window("main");
-
-  const styles = tv({
-    slots: {
-      container: "flex-center bg-background h-10 w-screen justify-between gap-3 px-2",
-      actions: "flex-center",
-      close: "hover:bg-red-400",
-    },
-  });
-
-  const { container, actions, close } = styles();
 
   function closeWindow() {
     appWindow.close();
@@ -24,6 +15,16 @@
   function maximizeWindow() {
     appWindow.maximize();
   }
+
+  const styles = tv({
+    slots: {
+      container: "flex-center bg-background h-10 w-screen justify-between gap-3 px-2",
+      actions: "flex-center",
+      close: "hover:bg-red-400",
+    },
+  });
+
+  const { container, actions, close } = styles();
 </script>
 
 <nav data-tauri-drag-region class={container()}>
