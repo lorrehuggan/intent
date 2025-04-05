@@ -17,6 +17,10 @@
     <Button size="icon" variant="secondary"><Plus size={15} /></Button>
     <Button size="icon" variant="secondary"><Layers size={15} /></Button>
     <Button size="icon" variant="secondary"><Archive size={15} /></Button>
-    <Button size="icon" variant="secondary"><Wrench size={15} /></Button>
+    <Button size="icon" variant="secondary">
+      <a href="/settings">
+        <Wrench size={15} />
+      </a>
+    </Button>
   </div>
 </div>
