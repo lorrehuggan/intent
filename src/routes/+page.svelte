@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from "@/components/ui/button/button.svelte";
+  import YearTimeline from "@/components/app/timeline/yearTimeline.svelte";
 </script>
 
-<h1 class="text-4xl">Habits</h1>
+<YearTimeline />
