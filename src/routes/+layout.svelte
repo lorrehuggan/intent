@@ -31,7 +31,8 @@
       windowContainer: "h-screen w-screen overflow-hidden rounded-2xl",
       appContainer: "flex h-[calc(100vh-36px)] overflow-hidden",
       contentContainer: "w-full overflow-x-hidden p-8 pt-2 pl-2",
-      mainContainer: "h-full rounded-2xl bg-neutral-100 px-6 py-4 dark:bg-neutral-900",
+      mainContainer:
+        "h-full overflow-y-scroll rounded-2xl bg-neutral-100 px-6 py-4 dark:bg-neutral-900",
     },
   });
 

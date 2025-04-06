@@ -1,7 +1,7 @@
 mod handlers;
 mod models;
 
-use handlers::app::{habit, timeline};
+use handlers::app::{commit, habit, timeline};
 use handlers::user::settings;
 use sqlx::{sqlite::SqlitePoolOptions, Pool, Sqlite};
 use std::fs::OpenOptions;
@@ -25,6 +25,10 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             habit::get_habit,
+            habit::get_all_habits,
+            commit::create_commit,
+            commit::delete_commit,
+            commit::get_habit_commits,
             timeline::create_year_timeline,
             settings::get_user_settings,
             settings::set_user_settings

@@ -1,8 +1,10 @@
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Local};
 use serde::{Deserialize, Serialize};
+use sqlx::{FromRow, Type}; // 👈 This line is the fix
 use ts_rs::TS;
 
-#[derive(Serialize, Deserialize, TS)]
+#[derive(Serialize, Deserialize, TS, Type, PartialEq)]
+#[sqlx(type_name = "TEXT")]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/types/bindings.ts")]
 pub enum HabitStatus {
@@ -11,7 +13,8 @@ pub enum HabitStatus {
     Archived,
 }
 
-#[derive(Serialize, Deserialize, TS)]
+#[derive(Serialize, Deserialize, TS, Type)]
+#[sqlx(type_name = "TEXT")]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/types/bindings.ts")]
 pub enum HabitStreak {
@@ -20,7 +23,8 @@ pub enum HabitStreak {
     Monthly,
 }
 
-#[derive(Serialize, Deserialize, TS)]
+#[derive(Serialize, Deserialize, TS, Type)]
+#[sqlx(type_name = "TEXT")]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/types/bindings.ts")]
 pub enum HabitTheme {
@@ -35,7 +39,8 @@ pub enum HabitTheme {
     Neutral,
 }
 
-#[derive(Serialize, Deserialize, TS)]
+#[derive(Serialize, Deserialize, TS, Type)]
+#[sqlx(type_name = "TEXT")]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/types/bindings.ts")]
 pub enum HabitCategory {
@@ -59,7 +64,8 @@ pub enum HabitCategory {
     Other,
 }
 
-#[derive(Serialize, Deserialize, TS)]
+#[derive(Serialize, Deserialize, TS, Type)]
+#[sqlx(type_name = "TEXT")]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/types/bindings.ts")]
 pub enum HabitReminder {
@@ -72,18 +78,19 @@ pub enum HabitReminder {
     Sun,
 }
 
-#[derive(Serialize, Deserialize, TS)]
+#[derive(Serialize, Deserialize, TS, FromRow)]
 #[serde(rename_all = "camelCase")]
 #[ts(export, export_to = "../../src/types/bindings.ts")]
 pub struct Habit {
+    pub id: Option<u32>,
     pub title: String,
     pub description: String,
     pub status: HabitStatus,
     pub streak: HabitStreak,
-    pub completions: u16,
+    pub completions: u8,
     pub theme: HabitTheme,
     pub category: HabitCategory,
     pub reminder: Option<HabitReminder>,
-    pub created: DateTime<Utc>,
-    pub updated: Option<DateTime<Utc>>,
+    pub created: DateTime<Local>,
+    pub updated: Option<DateTime<Local>>,
 }
