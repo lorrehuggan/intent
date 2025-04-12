@@ -1,6 +1,14 @@
 import type { UserSettings } from "@/types/bindings";
 
-let userSettings = $state<UserSettings | null>(null);
+const defaultUserSettings: UserSettings = {
+  id: 1,
+  defaultTimeline: "year",
+  highlightCurrentDay: true,
+  showCategoryFilter: false,
+  theme: "light",
+};
+
+let userSettings = $state<UserSettings>(defaultUserSettings);
 
 export function getUserSettings() {
   return userSettings;
