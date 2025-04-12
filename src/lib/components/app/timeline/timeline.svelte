@@ -47,29 +47,26 @@
   const styles = tv({
     slots: {
       container: "",
-      header:
-        "flex-center text-foreground mb-2 w-full justify-between rounded-lg bg-neutral-200 p-2 px-3 dark:bg-neutral-800 dark:text-neutral-100",
+      header: "flex-center mb-2 w-full justify-between rounded-lg py-2",
       headerTitle: "text-sm font-bold",
-      headerDesc: "text-xs",
+      headerDesc: "text-muted-foreground text-xs",
       week: "flex-center mb-[2px] gap-[2px]",
       node: "size-[13px] rounded",
-      commitButton: "",
+      commitButton: "text-background",
     },
     variants: {
       status: {
         completed: {
-          node: "bg-primary",
           commitButton: "bg-primary",
         },
         incomplete: {
-          node: "bg-primary/20",
-          commitButton: "dark:bg-foreground bg-background",
+          commitButton: "bg-muted-foreground",
         },
       },
     },
   });
 
-  const { header, headerTitle, headerDesc, week, node, commitButton } = styles();
+  const { header, headerTitle, headerDesc, week, commitButton } = styles();
 </script>
 
 <!-- NODE -->
@@ -78,8 +75,11 @@
   {@const isNodeToday = convertDateNoTime(day) === convertDateNoTime(today)}
   <div
     data-date={convertDateNoTime(day)}
-    class={node({
-      status: completed ? "completed" : "incomplete",
+    class={clsx("size-[13px] rounded", {
+      "bg-primary cursor-pointer": committedToday && isNodeToday,
+      "bg-primary/50": !committedToday && isNodeToday,
+      "bg-primary/75 cursor-pointer": completed && !isNodeToday,
+      "bg-primary/25": !completed && !isNodeToday,
     })}
   ></div>
 {/snippet}
