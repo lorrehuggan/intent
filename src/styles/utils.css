@@ -7,3 +7,6 @@
 @utility color-fade {
   @apply transition-colors duration-200 ease-in-out;
 }
+@utility page-heading {
+  @apply text-3xl;
+}
