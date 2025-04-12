@@ -1,6 +1,6 @@
 <script>
   import Button from "@/components/ui/button/button.svelte";
-  import { Archive, Layers, Plus, Wrench } from "@lucide/svelte";
+  import { Archive, Home, Layers, Plus, Wrench } from "@lucide/svelte";
   import { tv } from "tailwind-variants";
 
   const styles = tv({
@@ -14,9 +14,12 @@
 
 <div class={container()}>
   <div class={menu()}>
-    <Button size="icon" variant="secondary"><Plus size={15} /></Button>
-    <Button size="icon" variant="secondary"><Layers size={15} /></Button>
-    <Button size="icon" variant="secondary"><Archive size={15} /></Button>
+    <a href="/">
+      <Button size="icon" variant="secondary"><Home size={16} /></Button>
+    </a>
+    <Button size="icon" variant="secondary"><Plus size={16} /></Button>
+    <Button size="icon" variant="secondary"><Layers size={16} /></Button>
+    <Button size="icon" variant="secondary"><Archive size={16} /></Button>
     <Button size="icon" variant="secondary">
       <a href="/settings">
         <Wrench size={15} />

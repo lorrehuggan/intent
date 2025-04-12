@@ -13,13 +13,13 @@
   let { children } = $props();
 
   onMount(async () => {
-    const response = await invoke<UserSettings>("get_user_settings");
-    setUserSettings(response);
-    const userSettings: UserSettings | null = getUserSettings();
+    invoke<UserSettings>("get_user_settings").then((settings) => setUserSettings(settings));
 
-    if (userSettings?.theme === "light") {
+    const userSettings: UserSettings = getUserSettings();
+
+    if (userSettings.theme === "light") {
       html?.classList.remove("dark");
-    } else if (userSettings?.theme === "dark") {
+    } else if (userSettings.theme === "dark") {
       html?.classList.add("dark");
     } else {
       html?.classList.remove("dark");
