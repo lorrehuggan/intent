@@ -13,18 +13,19 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@lucide/svelte": "^0.483.0",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
     "dayjs": "^1.11.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
+    "@lucide/svelte": "^0.483.0",
     "@sveltejs/adapter-static": "^3.0.6",
     "@sveltejs/kit": "^2.9.0",
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
     "@tailwindcss/vite": "^4.0.15",
     "@tauri-apps/cli": "^2",
+    "arktype": "^2.1.20",
     "bits-ui": "0.22.0",
     "clsx": "^2.1.1",
     "eslint": "^9.23.0",
@@ -35,6 +36,7 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "svelte": "^5.0.0",
     "svelte-check": "^4.0.0",
+    "sveltekit-superforms": "^2.24.1",
     "tailwind-merge": "^3.0.2",
     "tailwind-variants": "^1.0.0",
     "tailwindcss": "^4.0.15",

@@ -11,6 +11,8 @@
   import { onMount } from "svelte";
   import { tv } from "tailwind-variants";
 
+  const html = document.querySelector("html");
+
   let { habit }: { habit: Habit } = $props();
 
   let yearTimeline = $state<Array<Array<string>>>([]);
@@ -56,11 +58,9 @@
     },
     variants: {
       status: {
-        completed: {
-          commitButton: "bg-primary",
-        },
+        completed: {},
         incomplete: {
-          commitButton: "bg-muted-foreground",
+          commitButton: "bg-rose-300 hover:bg-red-400",
         },
       },
     },
@@ -73,13 +73,15 @@
 {#snippet tlnode(day: string, commit: Commit | undefined)}
   {@const completed = commit?.completed}
   {@const isNodeToday = convertDateNoTime(day) === convertDateNoTime(today)}
+  {@const highlightCurrentDay = html?.getAttribute("data-highlight-current-day") === "true"}
   <div
     data-date={convertDateNoTime(day)}
     class={clsx("size-[13px] rounded", {
       "bg-primary cursor-pointer": committedToday && isNodeToday,
-      "bg-primary/50": !committedToday && isNodeToday,
+      "bg-rose-300": !committedToday && isNodeToday && highlightCurrentDay,
       "bg-primary/75 cursor-pointer": completed && !isNodeToday,
-      "bg-primary/25": !completed && !isNodeToday,
+      "bg-primary/25":
+        (!completed && !isNodeToday) || (!committedToday && isNodeToday && !highlightCurrentDay),
     })}
   ></div>
 {/snippet}
@@ -100,7 +102,9 @@
 <div class="">
   <div class={header()}>
     <div>
-      <p class={headerTitle()}>{habit.title}</p>
+      <a href={`/habit/${habit.id}`}>
+        <p class={headerTitle()}>{habit.title}</p>
+      </a>
       <p class={headerDesc()}>{habit.description}</p>
     </div>
     <div>

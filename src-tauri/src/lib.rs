@@ -31,7 +31,9 @@ pub fn run() {
             commit::get_habit_commits,
             timeline::create_year_timeline,
             settings::get_user_settings,
-            settings::set_user_settings
+            settings::set_user_settings,
+            settings::set_theme,
+            settings::set_highlight_current_day
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

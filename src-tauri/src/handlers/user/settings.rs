@@ -14,6 +14,35 @@ pub async fn get_user_settings(state: tauri::State<'_, AppState>) -> Result<User
 }
 
 #[tauri::command]
+pub async fn set_theme(state: tauri::State<'_, AppState>, theme: String) -> Result<&str, String> {
+    let db = &state.db;
+    let query = "UPDATE user_settings SET theme = $1 WHERE id = 1";
+    sqlx::query(query)
+        .bind(theme)
+        .execute(db)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok("ok")
+}
+
+#[tauri::command]
+pub async fn set_highlight_current_day(
+    state: tauri::State<'_, AppState>,
+    highlight_current_day: bool,
+) -> Result<&str, String> {
+    let db = &state.db;
+    let query = "UPDATE user_settings SET highlight_current_day = $1 WHERE id = 1";
+    sqlx::query(query)
+        .bind(highlight_current_day)
+        .execute(db)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok("ok")
+}
+
+#[tauri::command]
 pub async fn set_user_settings(
     state: tauri::State<'_, AppState>,
     payload: UserSettings,
