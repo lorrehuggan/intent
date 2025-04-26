@@ -10,6 +10,8 @@
   import dayjs from "dayjs";
   import { onMount } from "svelte";
   import { tv } from "tailwind-variants";
+  import * as Dialog from "$lib/components/ui/dialog/index.js";
+  import Edit from "./edit.svelte";
 
   const html = document.querySelector("html");
 
@@ -49,9 +51,10 @@
   const styles = tv({
     slots: {
       container: "",
-      header: "flex-center mb-2 w-full justify-between rounded-lg py-2",
-      headerTitle: "text-sm font-bold",
+      header: "flex-center mb-1 w-full justify-between rounded-lg py-2",
+      headerTitle: "",
       headerDesc: "text-muted-foreground text-xs",
+      headerCat: "text-muted-foreground text-xs capitalize",
       week: "flex-center mb-[2px] gap-[2px]",
       node: "size-[13px] rounded",
       commitButton: "text-background",
@@ -66,7 +69,7 @@
     },
   });
 
-  const { header, headerTitle, headerDesc, week, commitButton } = styles();
+  const { header, headerTitle, headerDesc, headerCat, week, commitButton } = styles();
 </script>
 
 <!-- NODE -->
@@ -102,9 +105,7 @@
 <div class="">
   <div class={header()}>
     <div>
-      <a href={`/habit/${habit.id}`}>
-        <p class={headerTitle()}>{habit.title}</p>
-      </a>
+      <Edit {habit} />
       <p class={headerDesc()}>{habit.description}</p>
     </div>
     <div>
