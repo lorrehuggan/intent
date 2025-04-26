@@ -6,6 +6,9 @@
   import { onMount } from "svelte";
   import { invoke } from "@tauri-apps/api/core";
   import type { UserSettings } from "@/types/bindings";
+  import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
+  import { queryClient } from "@/context/query";
+  import { SvelteQueryDevtools } from "@tanstack/svelte-query-devtools";
 
   const html = document.querySelector("html");
 
@@ -38,14 +41,17 @@
   const { windowContainer, appContainer, contentContainer, mainContainer } = styles();
 </script>
 
-<div class={windowContainer()}>
-  <Titlebar />
-  <div class={appContainer()}>
-    <Sidebar />
-    <div class={contentContainer()}>
-      <main class={mainContainer()}>
-        {@render children()}
-      </main>
+<QueryClientProvider client={queryClient}>
+  <div class={windowContainer()}>
+    <Titlebar />
+    <div class={appContainer()}>
+      <Sidebar />
+      <div class={contentContainer()}>
+        <main class={mainContainer()}>
+          {@render children()}
+        </main>
+      </div>
     </div>
   </div>
-</div>
+  <SvelteQueryDevtools />
+</QueryClientProvider>
