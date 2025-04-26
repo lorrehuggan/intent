@@ -2,22 +2,34 @@
   import Timeline from "@/components/app/timeline/timeline.svelte";
   import type { Habit } from "@/types/bindings";
   import { invoke } from "@tauri-apps/api/core";
-  import { onMount } from "svelte";
+  import { tv } from "tailwind-variants";
+  import AddHabit from "@/components/app/statusbar/addHabit.svelte";
+  import { createQuery } from "@tanstack/svelte-query";
 
-  let habits: Array<Habit> | [] = $state([]);
-
-  onMount(async () => {
-    try {
-      const response = await invoke<Array<Habit>>("get_all_habits");
-      habits = response;
-    } catch (e) {
-      console.log(e);
-    }
+  const query = createQuery<Array<Habit>>({
+    queryKey: ["all_habits"],
+    queryFn: () => invoke("get_all_habits"),
   });
+
+  const styles = tv({
+    slots: {
+      taskbar: "flex-center mb-4 justify-end",
+      taskbarStats: "text-muted-foreground text-xs",
+      timelines: "space-y-8",
+    },
+  });
+  const { taskbar, taskbarStats, timelines } = styles();
 </script>
 
-<div class="space-y-8">
-  {#each habits as habit}
-    <Timeline {habit} />
-  {/each}
+<div class={taskbar()}>
+  <div>
+    <AddHabit />
+  </div>
+</div>
+<div class={timelines()}>
+  {#if $query.isSuccess}
+    {#each $query.data as habit}
+      <Timeline {habit} />
+    {/each}
+  {/if}
 </div>

@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
   import Button from "@/components/ui/button/button.svelte";
   import { Archive, Home, Layers, Plus, Wrench } from "@lucide/svelte";
   import { tv } from "tailwind-variants";
+  import * as Dialog from "$lib/components/ui/dialog/index.js";
 
   const styles = tv({
     slots: {
@@ -17,7 +18,14 @@
     <a href="/">
       <Button size="icon" variant="secondary"><Home size={16} /></Button>
     </a>
-    <Button size="icon" variant="secondary"><Plus size={16} /></Button>
+    <Dialog.Root>
+      <Dialog.Trigger class="Trigger">
+        <Button size="icon" variant="secondary"><Plus size={16} /></Button>
+      </Dialog.Trigger>
+      <Dialog.Content class="rounded-xl">
+        <p>kjaskdj</p>
+      </Dialog.Content>
+    </Dialog.Root>
     <Button size="icon" variant="secondary"><Layers size={16} /></Button>
     <Button size="icon" variant="secondary"><Archive size={16} /></Button>
     <Button size="icon" variant="secondary">

@@ -26,12 +26,17 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             habit::get_habit,
             habit::get_all_habits,
+            habit::create_habit,
+            habit::update_habit,
+            habit::delete_habit,
             commit::create_commit,
             commit::delete_commit,
             commit::get_habit_commits,
             timeline::create_year_timeline,
             settings::get_user_settings,
-            settings::set_user_settings
+            settings::set_user_settings,
+            settings::set_theme,
+            settings::set_highlight_current_day
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

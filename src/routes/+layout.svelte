@@ -6,24 +6,26 @@
   import { onMount } from "svelte";
   import { invoke } from "@tauri-apps/api/core";
   import type { UserSettings } from "@/types/bindings";
-  import { getUserSettings, setUserSettings } from "@/context/user/settings.svelte";
+  import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
+  import { queryClient } from "@/context/query";
+  import { SvelteQueryDevtools } from "@tanstack/svelte-query-devtools";
 
   const html = document.querySelector("html");
 
   let { children } = $props();
 
   onMount(async () => {
-    invoke<UserSettings>("get_user_settings").then((settings) => setUserSettings(settings));
-
-    const userSettings: UserSettings = getUserSettings();
-
-    if (userSettings.theme === "light") {
-      html?.classList.remove("dark");
-    } else if (userSettings.theme === "dark") {
-      html?.classList.add("dark");
-    } else {
-      html?.classList.remove("dark");
-    }
+    if (!html) return;
+    invoke<UserSettings>("get_user_settings").then((settings) => {
+      if (settings.theme === "light") {
+        html.classList.remove("dark");
+      }
+      if (settings.theme === "dark") {
+        html.classList.add("dark");
+      }
+      html.setAttribute("data-theme", settings.theme);
+      html.setAttribute("data-highlight-current-day", settings.highlightCurrentDay.toString());
+    });
   });
 
   const styles = tv({
@@ -39,14 +41,17 @@
   const { windowContainer, appContainer, contentContainer, mainContainer } = styles();
 </script>
 
-<div class={windowContainer()}>
-  <Titlebar />
-  <div class={appContainer()}>
-    <Sidebar />
-    <div class={contentContainer()}>
-      <main class={mainContainer()}>
-        {@render children()}
-      </main>
+<QueryClientProvider client={queryClient}>
+  <div class={windowContainer()}>
+    <Titlebar />
+    <div class={appContainer()}>
+      <Sidebar />
+      <div class={contentContainer()}>
+        <main class={mainContainer()}>
+          {@render children()}
+        </main>
+      </div>
     </div>
   </div>
-</div>
+  <SvelteQueryDevtools />
+</QueryClientProvider>

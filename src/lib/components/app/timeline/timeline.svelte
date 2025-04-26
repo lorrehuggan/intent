@@ -10,6 +10,10 @@
   import dayjs from "dayjs";
   import { onMount } from "svelte";
   import { tv } from "tailwind-variants";
+  import * as Dialog from "$lib/components/ui/dialog/index.js";
+  import Edit from "./edit.svelte";
+
+  const html = document.querySelector("html");
 
   let { habit }: { habit: Habit } = $props();
 
@@ -47,39 +51,40 @@
   const styles = tv({
     slots: {
       container: "",
-      header: "flex-center mb-2 w-full justify-between rounded-lg py-2",
-      headerTitle: "text-sm font-bold",
+      header: "flex-center mb-1 w-full justify-between rounded-lg py-2",
+      headerTitle: "",
       headerDesc: "text-muted-foreground text-xs",
+      headerCat: "text-muted-foreground text-xs capitalize",
       week: "flex-center mb-[2px] gap-[2px]",
       node: "size-[13px] rounded",
       commitButton: "text-background",
     },
     variants: {
       status: {
-        completed: {
-          commitButton: "bg-primary",
-        },
+        completed: {},
         incomplete: {
-          commitButton: "bg-muted-foreground",
+          commitButton: "bg-rose-300 hover:bg-red-400",
         },
       },
     },
   });
 
-  const { header, headerTitle, headerDesc, week, commitButton } = styles();
+  const { header, headerTitle, headerDesc, headerCat, week, commitButton } = styles();
 </script>
 
 <!-- NODE -->
 {#snippet tlnode(day: string, commit: Commit | undefined)}
   {@const completed = commit?.completed}
   {@const isNodeToday = convertDateNoTime(day) === convertDateNoTime(today)}
+  {@const highlightCurrentDay = html?.getAttribute("data-highlight-current-day") === "true"}
   <div
     data-date={convertDateNoTime(day)}
     class={clsx("size-[13px] rounded", {
       "bg-primary cursor-pointer": committedToday && isNodeToday,
-      "bg-primary/50": !committedToday && isNodeToday,
+      "bg-rose-300": !committedToday && isNodeToday && highlightCurrentDay,
       "bg-primary/75 cursor-pointer": completed && !isNodeToday,
-      "bg-primary/25": !completed && !isNodeToday,
+      "bg-primary/25":
+        (!completed && !isNodeToday) || (!committedToday && isNodeToday && !highlightCurrentDay),
     })}
   ></div>
 {/snippet}
@@ -100,7 +105,7 @@
 <div class="">
   <div class={header()}>
     <div>
-      <p class={headerTitle()}>{habit.title}</p>
+      <Edit {habit} />
       <p class={headerDesc()}>{habit.description}</p>
     </div>
     <div>
