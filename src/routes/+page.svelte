@@ -28,7 +28,7 @@
 </div>
 <div class={timelines()}>
   {#if $query.isSuccess}
-    {#each $query.data as habit}
+    {#each $query.data as habit (habit.id)}
       <Timeline {habit} />
     {/each}
   {/if}
