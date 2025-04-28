@@ -41,7 +41,7 @@
 
   let myOpen = $state(false);
 
-  const { form, errors, enhance } = superForm<
+  const { form, errors, enhance, reset } = superForm<
     Infer<typeof schema>,
     { status: number; text: string }
   >(data, {
@@ -144,7 +144,9 @@
 
 <Dialog.Root bind:open={() => myOpen, (newOpen) => (myOpen = newOpen)}>
   <Dialog.Trigger>
-    <Button class="text-foreground text-xs" variant="default" size="sm">Create Habit</Button>
+    <Button onclick={() => reset()} class="text-foreground text-xs" variant="default" size="sm"
+      >Create Habit</Button
+    >
   </Dialog.Trigger>
   <Dialog.Content>
     <form method="POST" use:enhance class="">
