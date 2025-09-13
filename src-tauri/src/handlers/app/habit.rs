@@ -8,19 +8,7 @@ use chrono::Local;
 
 #[tauri::command]
 pub fn get_habit() -> Habit {
-    Habit {
-        id: Some(2),
-        title: "test".to_string(),
-        description: "test".to_string(),
-        status: HabitStatus::OnGoing,
-        streak: HabitStreak::Monthly,
-        completions: 1,
-        theme: HabitTheme::Mint,
-        category: HabitCategory::Health,
-        reminder: Some(HabitReminder::Mon),
-        created: Local::now(),
-        updated: None,
-    }
+    todo!()
 }
 
 #[tauri::command]
@@ -50,19 +38,23 @@ pub async fn create_habit(state: tauri::State<'_, AppState>, habit: Habit) -> Re
         status: HabitStatus::OnGoing,
         streak: habit.streak,
         completions: 1,
+        completions_needed: 1,
+        icon: habit.icon,
         theme: habit.theme,
         category: habit.category,
         reminder: habit.reminder,
         created: Local::now(),
         updated: None,
     };
-    let query = "INSERT INTO habit (title, description, status, streak, completions, theme, category, reminder, created, updated) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
+    let query = "INSERT INTO habit (title, description, status, streak, completions, completions_needed, icon, theme, category, reminder, created, updated) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)";
     sqlx::query(query)
         .bind(new_habit.title)
         .bind(new_habit.description)
         .bind(new_habit.status)
         .bind(new_habit.streak)
         .bind(new_habit.completions)
+        .bind(new_habit.completions_needed)
+        .bind(new_habit.icon)
         .bind(new_habit.theme)
         .bind(new_habit.category)
         .bind(new_habit.reminder)
@@ -79,7 +71,7 @@ pub async fn create_habit(state: tauri::State<'_, AppState>, habit: Habit) -> Re
 pub async fn update_habit(state: tauri::State<'_, AppState>, habit: Habit) -> Result<&str, String> {
     let db = &state.db;
 
-    let query = "UPDATE habit SET title = $1, description = $2, status = $3, streak = $4, completions = $5, theme = $6, category = $7, reminder = $8, created = $9, updated = $10 WHERE id = $11";
+    let query = "UPDATE habit SET title = $1, description = $2, status = $3, streak = $4, completions = $5, completions_needed = $12, icon = $11, theme = $6, category = $7, reminder = $8, created = $9, updated = $10 WHERE id = $13";
     let now = Local::now();
 
     sqlx::query(query)
@@ -93,6 +85,8 @@ pub async fn update_habit(state: tauri::State<'_, AppState>, habit: Habit) -> Re
         .bind(habit.reminder)
         .bind(habit.created)
         .bind(now)
+        .bind(habit.icon)
+        .bind(habit.completions_needed)
         .bind(habit.id.unwrap())
         .execute(db)
         .await

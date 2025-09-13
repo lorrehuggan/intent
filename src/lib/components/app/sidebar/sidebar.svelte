@@ -6,7 +6,7 @@
 
   const styles = tv({
     slots: {
-      container: "h-full w-20 py-8 pt-2 pl-4",
+      container: "h-full px-4 py-8 pt-2",
       menu: "flex-center size-full flex-col gap-4 rounded-xl py-4",
     },
   });
@@ -16,22 +16,9 @@
 <div class={container()}>
   <div class={menu()}>
     <a href="/">
-      <Button size="icon" variant="secondary"><Home size={16} /></Button>
+      <Button size="icon" variant="ghost"><Home size={16} /></Button>
     </a>
-    <Dialog.Root>
-      <Dialog.Trigger class="Trigger">
-        <Button size="icon" variant="secondary"><Plus size={16} /></Button>
-      </Dialog.Trigger>
-      <Dialog.Content class="rounded-xl">
-        <p>kjaskdj</p>
-      </Dialog.Content>
-    </Dialog.Root>
-    <Button size="icon" variant="secondary"><Layers size={16} /></Button>
-    <Button size="icon" variant="secondary"><Archive size={16} /></Button>
-    <Button size="icon" variant="secondary">
-      <a href="/settings">
-        <Wrench size={15} />
-      </a>
-    </Button>
+    <Button size="icon" variant="ghost"><Layers size={14} /></Button>
+    <Button size="icon" variant="ghost"><Archive size={14} /></Button>
   </div>
 </div>

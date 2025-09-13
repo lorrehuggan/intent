@@ -21,11 +21,7 @@
   const { taskbar, taskbarStats, timelines } = styles();
 </script>
 
-<div class={taskbar()}>
-  <div>
-    <AddHabit />
-  </div>
-</div>
+<div class={taskbar()}></div>
 <div class={timelines()}>
   {#if $query.isSuccess}
     {#each $query.data as habit (habit.id)}

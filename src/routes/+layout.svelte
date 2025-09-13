@@ -9,6 +9,7 @@
   import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
   import { queryClient } from "@/context/query";
   import { SvelteQueryDevtools } from "@tanstack/svelte-query-devtools";
+  import StatusBar from "@/components/app/statusbar/statusBar.svelte";
 
   const html = document.querySelector("html");
 
@@ -32,7 +33,7 @@
     slots: {
       windowContainer: "h-screen w-screen overflow-hidden rounded-2xl",
       appContainer: "flex h-[calc(100vh-36px)] overflow-hidden",
-      contentContainer: "w-full overflow-x-hidden p-8 pt-2 pl-2",
+      contentContainer: "w-full overflow-x-hidden p-8 pt-2 pl-0",
       mainContainer:
         "h-full overflow-y-scroll rounded-2xl bg-neutral-100 px-6 py-4 dark:bg-neutral-900",
     },
@@ -48,6 +49,7 @@
       <Sidebar />
       <div class={contentContainer()}>
         <main class={mainContainer()}>
+          <StatusBar />
           {@render children()}
         </main>
       </div>

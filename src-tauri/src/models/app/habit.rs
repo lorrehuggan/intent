@@ -88,9 +88,21 @@ pub struct Habit {
     pub status: HabitStatus,
     pub streak: HabitStreak,
     pub completions: u8,
+    pub completions_needed: u8,
+    pub icon: String,
     pub theme: HabitTheme,
     pub category: HabitCategory,
     pub reminder: Option<HabitReminder>,
     pub created: DateTime<Local>,
     pub updated: Option<DateTime<Local>>,
+}
+
+#[derive(Serialize, Deserialize, TS, FromRow)]
+#[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "../../src/types/bindings.ts")]
+pub struct HabitStack {
+    pub id: i32,
+    pub parent_habit_id: i32,
+    pub child_habit_id: i32,
+    pub position: i32,
 }

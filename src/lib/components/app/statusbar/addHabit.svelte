@@ -2,6 +2,7 @@
   import * as Dialog from "$lib/components/ui/dialog/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import * as Select from "$lib/components/ui/select/index.js";
+  import Badge from "@/components/ui/badge/badge.svelte";
   import { Button } from "@/components/ui/button";
   import { queryClient } from "@/context/query";
   import type {
@@ -50,6 +51,9 @@
     clearOnSubmit: "errors-and-message",
     validators: arktype(schema, { defaults: defaultForm }),
     onUpdate: async ({ form }) => {
+      if (form.errors) {
+        return;
+      }
       //TODO: validate form inputs
       const data: Habit = {
         id: 0,
@@ -57,7 +61,9 @@
         description: form.data.description,
         category: form.data.category as HabitCategory,
         completions: 0,
+        completionsNeeded: 1,
         created: new Date().toISOString(),
+        icon: "",
         reminder:
           form.data.reminder === "no reminder" ? null : (form.data.reminder as HabitReminder),
         status: "onGoing",
@@ -144,9 +150,9 @@
 
 <Dialog.Root bind:open={() => myOpen, (newOpen) => (myOpen = newOpen)}>
   <Dialog.Trigger>
-    <Button onclick={() => reset()} class="text-foreground text-xs" variant="default" size="sm"
-      >Create Habit</Button
-    >
+    <button onclick={() => reset()}>
+      <Badge class="text-background font-medium">Add Habit</Badge>
+    </button>
   </Dialog.Trigger>
   <Dialog.Content>
     <form method="POST" use:enhance class="">
@@ -176,7 +182,7 @@
           <span class={errorMessage()}>{$errors.description}</span>
         {/if}
       </div>
-      <div class="flex-center gap-2">
+      <div class="flex-center mt-2 gap-2">
         <Select.Root type="single" name="streak" bind:value={$form.streak}>
           <Select.Trigger class={selectTrigger()}
             ><CalendarFold size="14" class="text-blue-300" />

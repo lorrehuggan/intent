@@ -4,7 +4,7 @@
   import Button from "@/components/ui/button/button.svelte";
   import type { Commit, Habit } from "@/types/bindings";
   import { convertDateNoTime } from "@/utils";
-  import { CheckIcon } from "@lucide/svelte";
+  import { CheckIcon, TriangleAlertIcon } from "@lucide/svelte";
   import { invoke } from "@tauri-apps/api/core";
   import clsx from "clsx";
   import dayjs from "dayjs";
@@ -48,28 +48,46 @@
     }
   }
 
+  function habitTheme() {
+    switch (habit.theme) {
+      case "red":
+        return "bg-red-400";
+      case "green":
+        return "bg-emerald-400";
+      case "blue":
+        return "bg-blue-400";
+      case "rose":
+        return "bg-rose-400";
+      case "mint":
+        return "bg-lime-400";
+      case "sky":
+        return "bg-sky-400";
+      case "amber":
+        return "bg-amber-400";
+      case "indigo":
+        return "bg-indigo-400";
+      case "neutral":
+        return "bg-neutral-400";
+    }
+  }
+
   const styles = tv({
     slots: {
       container: "",
       header: "flex-center mb-1 w-full justify-between rounded-lg py-2",
-      headerTitle: "",
       headerDesc: "text-muted-foreground text-xs",
-      headerCat: "text-muted-foreground text-xs capitalize",
       week: "flex-center mb-[2px] gap-[2px]",
       node: "size-[13px] rounded",
-      commitButton: "text-background",
     },
     variants: {
       status: {
         completed: {},
-        incomplete: {
-          commitButton: "bg-rose-300 hover:bg-red-400",
-        },
+        incomplete: {},
       },
     },
   });
 
-  const { header, headerTitle, headerDesc, headerCat, week, commitButton } = styles();
+  const { header, headerDesc, week } = styles();
 </script>
 
 <!-- NODE -->
@@ -80,10 +98,10 @@
   <div
     data-date={convertDateNoTime(day)}
     class={clsx("size-[13px] rounded", {
-      "bg-primary cursor-pointer": committedToday && isNodeToday,
-      "bg-rose-300": !committedToday && isNodeToday && highlightCurrentDay,
-      "bg-primary/75 cursor-pointer": completed && !isNodeToday,
-      "bg-primary/25":
+      [habitTheme()]: committedToday && isNodeToday,
+      "bg-foreground/40": !committedToday && isNodeToday && highlightCurrentDay,
+      [`${habitTheme()} opacity-75`]: completed && !isNodeToday,
+      [`${habitTheme()} opacity-25`]:
         (!completed && !isNodeToday) || (!committedToday && isNodeToday && !highlightCurrentDay),
     })}
   ></div>
@@ -102,7 +120,7 @@
 {/snippet}
 
 <!-- TIMELINE -->
-<div class="">
+<div class="mx-auto max-w-[772px]">
   <div class={header()}>
     <div>
       <Edit {habit} />
@@ -111,12 +129,17 @@
     <div>
       <Button
         onclick={() => toggleTodaysCommit()}
-        class={commitButton({
-          status: committedToday ? "completed" : "incomplete",
+        class={clsx(`text-foreground transition-opacity duration-300 hover:${habitTheme()}`, {
+          [`${habitTheme()} hover:opacity-80`]: committedToday === true,
+          [`${habitTheme()} opacity-70 hover:opacity-80`]: committedToday === false,
         })}
         size="icon"
       >
-        <CheckIcon size={16} />
+        {#if committedToday}
+          <CheckIcon size={16} />
+        {:else}
+          <TriangleAlertIcon size={16} />
+        {/if}
       </Button>
     </div>
   </div>

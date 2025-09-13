@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from "@/components/ui/button/button.svelte";
-  import { Minus, Square, X } from "@lucide/svelte";
+  import { Cog, Minus, Search, Settings, Square, X } from "@lucide/svelte";
   import { tv } from "tailwind-variants";
   import { Window } from "@tauri-apps/api/window";
 
@@ -21,21 +21,28 @@
       container: "flex-center bg-background h-10 w-screen justify-between gap-3 px-2",
       actions: "flex-center",
       close: "hover:bg-red-400",
+      title: "text-muted-foreground pl-3 text-xs tracking-widest uppercase",
     },
   });
 
-  const { container, actions, close } = styles();
+  const { container, actions, close, title } = styles();
 </script>
 
 <nav data-tauri-drag-region class={container()}>
   <div>
-    <div class="text-muted-foreground pl-3 text-xs tracking-widest uppercase">Intent</div>
+    <div class={title()}>Intent</div>
   </div>
   <div class={actions()}>
-    <Button onclick={minimizeWindow} size="icon" variant="ghost"><Minus size="15" /></Button>
-    <Button onclick={maximizeWindow} size="icon" variant="ghost"><Square size="15" /></Button>
+    <div class="flex-center mr-4 gap-2">
+      <a href="/"><Search size="16" /></a>
+      <a href="/settings">
+        <Settings size="16" />
+      </a>
+    </div>
+    <Button onclick={minimizeWindow} size="icon" variant="ghost"><Minus size="16" /></Button>
+    <Button onclick={maximizeWindow} size="icon" variant="ghost"><Square size="16" /></Button>
     <Button class={close()} onclick={closeWindow} size="icon" variant="ghost"
-      ><X size="15" /></Button
+      ><X size="16" /></Button
     >
   </div>
 </nav>
